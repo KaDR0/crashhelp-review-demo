@@ -1,0 +1,50 @@
+Отчёт: Security Code Review — crashhelp-review-demo
+
+URL репозитория:
+https://github.com/KaDR0/crashhelp-review-demo
+
+Просмотренные PR:
+
+PR #1 — upload_demo.js
+https://github.com/KaDR0/crashhelp-review-demo/pull/1
+
+PR #2 — .env.example
+https://github.com/KaDR0/crashhelp-review-demo/pull/2
+
+Шаги ревьювера:
+
+Открыл PR #1, прочитал описание.
+
+Просмотрел Files changed (upload_demo.js) — проверил авторизацию, обработку файлов.
+
+Открыл PR #2, проверил .env.example.
+
+Добавил комментарии к строкам кода с найденными уязвимостями.
+
+Сформировал этот отчёт.
+
+Найденные уязвимости / замечания:
+
+PR #1 — upload_demo.js — High
+Отсутствует проверка авторизации при операциях с ресурсом пользователя (IDOR).
+Рекомендация: добавить middleware аутентификации, проверять req.user.id.
+
+PR #1 — upload_demo.js — Medium
+Нет валидации типа/размера загружаемых файлов.
+Рекомендация: проверять MIME-type и расширение, лимит 5MB, сохранять с UUID, вне публичной папки.
+
+PR #2 — .env.example — Critical / Demo
+В репозитории показан файл с потенциально чувствительными данными.
+Рекомендация: удалить реальные ключи, добавить .env в .gitignore, использовать секреты CI/CD.
+
+Вердикт:
+
+PR #1 — High issues (описаны в комментариях).
+
+PR #2 — Critical / Demo issue (описан в комментариях).
+
+Рекомендации общего характера:
+
+Включить автоматический SAST/SCA (GitHub CodeQL, Dependabot/Snyk).
+
+Добавить pre-commit hook (gitleaks) и CI secret scanning.
